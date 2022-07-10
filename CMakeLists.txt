@@ -13,6 +13,10 @@ endif ()
 
 option (BUILDCPP "Enable C++ (needed by FTDI4222 and tests)" ON)
 
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+set(BUILD_SHARED_LIBS OFF)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
+
 ###############################################################################
 # Detect supported warning flags
 # Modified from work By Dan Liew (fpbench - MIT)
@@ -183,20 +187,21 @@ else ()
   message (STATUS "INFO - Override arch is ${DETECTED_ARCH}")
 endif()
 
-if (DETECTED_ARCH STREQUAL "i586" OR DETECTED_ARCH STREQUAL "x86_64"
-    OR DETECTED_ARCH STREQUAL "i386")
-  set (X86PLAT ON)
-elseif (DETECTED_ARCH MATCHES "arm.*" OR DETECTED_ARCH MATCHES "aarch64")
-  set (ARMPLAT ON)
-elseif (DETECTED_ARCH MATCHES "mips")
-  set (MIPSPLAT ON)
-elseif (DETECTED_ARCH STREQUAL "MOCK")
-  set (MOCKPLAT ON)
-elseif (DETECTED_ARCH STREQUAL "PERIPHERALMAN")
-  set (PERIPHERALMAN ON)
-else ()
-  message (FATAL_ERROR "Only x86, arm, mips, PERIPHERALMAN and mock platforms currently supported")
-endif()
+# if (DETECTED_ARCH STREQUAL "i586" OR DETECTED_ARCH STREQUAL "x86_64"
+#     OR DETECTED_ARCH STREQUAL "i386")
+#   set (X86PLAT ON)
+# elseif (DETECTED_ARCH MATCHES "arm.*" OR DETECTED_ARCH MATCHES "aarch64")
+#   set (ARMPLAT ON)
+# elseif (DETECTED_ARCH MATCHES "mips")
+#   set (MIPSPLAT ON)
+# elseif (DETECTED_ARCH STREQUAL "MOCK")
+#   set (MOCKPLAT ON)
+# elseif (DETECTED_ARCH STREQUAL "PERIPHERALMAN")
+#   set (PERIPHERALMAN ON)
+# else ()
+#   message (FATAL_ERROR "Only x86, arm, mips, PERIPHERALMAN and mock platforms currently supported")
+# endif()
+set (ARMPLAT ON)
 
 if (BUILDSWIGPYTHON OR BUILDTESTS)
   include (cmake/modules/OpenCVDetectPython.cmake)
