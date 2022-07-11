@@ -1,6 +1,6 @@
 #include "i2c_sntest.h"
 
-i2c_device::i2c_device(int num, uint8_t *i2c_addr_t, int i2c_bus) {
+i2c_device::i2c_device(int num, uint8_t *i2c_addr_t, int i2c_bus) : devices(4, {0}) {
     device_num = num;
     // if (wiringPiSetup() != 0) {
     //     std::cout << "wiringPi error!" << std::endl;
@@ -8,14 +8,15 @@ i2c_device::i2c_device(int num, uint8_t *i2c_addr_t, int i2c_bus) {
     for (int i=0; i<device_num; i++) {
         if (i2c_addr_t)   i2c_addr[i] = i2c_addr_t[i];
         device.address(i2c_addr[i]);
-        // std::cout << i << ": " << std::hex << i2c_addr[i] << " ";
+
+        devices[i] = device;
     }
 }
 
 bool i2c_device::detect() {
     bool flag = false;
     for (int i=0; i<device_num; i++) {
-        Rx_buf[i] = device.readByte();
+        Rx_buf[i] = devices[i].readByte();
         // Rx_buf[i] = wiringPiI2CRead(device[i]);
         if (Rx_buf[i] != -1)    flag = true;
     }
@@ -30,7 +31,7 @@ bool i2c_device::detect() {
 
 void i2c_device::i2c_write(int* vel_pack) {
     for (int i=0; i<device_num; i++) {
-        device.writeByte(vel_pack[i]);
+        devices[i].writeByte(vel_pack[i]);
         // wiringPiI2CWrite(device[i], vel_pack[i]);
         // delay(5);    // FIX
     }
@@ -43,7 +44,7 @@ void i2c_device::i2c_write(int* vel_pack) {
 int i2c_device::i2c_read() {
     int Curr_Vel = -1;
     for (int i=0; i<device_num; i++) {
-        Curr_Vel = device.readByte();
+        Curr_Vel = devices[i].readByte();
         // wiringPiI2CWrite(device[i], vel_pack[i]);
         // delay(5);    // FIX
     }

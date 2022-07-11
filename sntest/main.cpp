@@ -12,8 +12,12 @@ int main() {
     if (motor.detect())
     {
         std::cout << "device detected" << std::endl;
+    }else {
+        std::cout << "NO device detected" << std::endl;
+        return 0;
     }
-    while ( 1 )
+
+    while (1)
     {
         int Curr_Vel = motor.i2c_read();
         std::cout << "Current Velocity: " << Curr_Vel << std::endl;

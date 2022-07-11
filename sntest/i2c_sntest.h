@@ -3,6 +3,7 @@
 
 // #include "main.h"
 #include <iostream>
+#include <vector>
 
 /* mraa headers */
 #include "mraa/common.hpp"
@@ -20,7 +21,10 @@ public:
 private:
     int device_num = 0;
     uint8_t i2c_addr[MAX_MOTOR] = {0x28,0x29,0x30,0x31};
+
     mraa::I2c device = mraa::I2c(0);
+    std::vector<mraa::I2c> devices;
+
     int Rx_buf[MAX_MOTOR];
 };
 
