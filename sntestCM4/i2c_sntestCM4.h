@@ -16,7 +16,7 @@ public:
     i2c_device(int num = MAX_MOTOR, uint8_t *i2c_addr_t = NULL, int i2c_bus=0);
     bool detect();
     void i2c_write(int* vel_pack);
-    void i2c_read(int* vel_encoder);
+    int i2c_read();
 
 private:
     int device_num = 0;

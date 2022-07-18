@@ -8,9 +8,9 @@ include_directories(${PROJECT_SOURCE_DIR}/api/mraa)
 
 include_directories(
     ${fmt_INCLUDE_DIRS}
-    ${PROJECT_SOURCE_DIR}/sntest/share/zos/project/include
-    ${PROJECT_SOURCE_DIR}/sntest/share
-    ${PROJECT_SOURCE_DIR}/sntest/share/utils
+    ${PROJECT_SOURCE_DIR}/sntestCM4/share/zos/project/include
+    ${PROJECT_SOURCE_DIR}/sntestCM4/share
+    ${PROJECT_SOURCE_DIR}/sntestCM4/share/utils
     /home/sn/aarch64-toolchains/include
     /home/sn/aarch64-toolchains/fmt/include
 )
@@ -23,18 +23,18 @@ set(LIBS
 )
 
 file(GLOB SHARED_SOURCE_FILES
-    ${PROJECT_SOURCE_DIR}/sntest/share/udp/*.cpp
+    ${PROJECT_SOURCE_DIR}/sntestCM4/share/udp/*.cpp
 )
 
 file(GLOB TEST_FILES
-    ${PROJECT_SOURCE_DIR}/sntest/*.cpp
+    ${PROJECT_SOURCE_DIR}/sntestCM4/*.cpp
 )
 
 # add_executable (aio_cpp aio.cpp)
 # add_executable (gpio_advanced_cpp gpio_advanced.cpp)
 # add_executable (gpio_cpp gpio.cpp)
 # add_executable (pwm_cpp pwm.cpp)
-add_executable (sntest ${TEST_FILES})
+add_executable (sntestCM4 ${TEST_FILES})
 # add_executable (spi_cpp spi.cpp)
 # add_executable (uart_cpp uart.cpp)
 # add_executable (iio_cpp iio.cpp)
@@ -45,7 +45,7 @@ add_executable (sntest ${TEST_FILES})
 # target_link_libraries (gpio_advanced_cpp mraa stdc++)
 # target_link_libraries (gpio_cpp mraa stdc++)
 # target_link_libraries (pwm_cpp mraa stdc++)
-target_link_libraries (sntest ${LIBS})
+target_link_libraries (sntestCM4 ${LIBS})
 # target_link_libraries (spi_cpp mraa stdc++)
 # target_link_libraries (uart_cpp mraa stdc++)
 # target_link_libraries (iio_cpp mraa stdc++)

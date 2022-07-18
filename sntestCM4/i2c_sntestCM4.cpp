@@ -1,4 +1,4 @@
-#include "i2c_sntest.h"
+#include "i2c_sntestCM4.h"
 
 i2c_device::i2c_device(int num, uint8_t *i2c_addr_t, int i2c_bus) : devices(4, {0}) {
     device_num = num;
@@ -8,6 +8,7 @@ i2c_device::i2c_device(int num, uint8_t *i2c_addr_t, int i2c_bus) : devices(4, {
     for (int i=0; i<device_num; i++) {
         if (i2c_addr_t)   i2c_addr[i] = i2c_addr_t[i];
         device.address(i2c_addr[i]);
+
         devices[i] = device;
     }
 }
@@ -40,13 +41,14 @@ void i2c_device::i2c_write(int* vel_pack) {
     // std::cout << std::endl;
 }
 
-void i2c_device::i2c_read(int* vel_encoder) {
-    // int Curr_Vel = -1;
+int i2c_device::i2c_read() {
+    int Curr_Vel = -1;
     for (int i=0; i<device_num; i++) {
-        vel_encoder[i] = devices[i].readByte();
+        Curr_Vel = devices[i].readByte();
         // wiringPiI2CWrite(device[i], vel_pack[i]);
         // delay(5);    // FIX
     }
+    return Curr_Vel;
     // Output
     // std::cout << "motor speed: ";
     // for (int i=0; i<device_num; i++)    std::cout<< vel_pack[i] << " ";
