@@ -1,30 +1,25 @@
 #ifndef I2C_H
 #define I2C_H
 
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <cmath>
+#include <chrono>
 #include "main.h"
-// #include <iostream>
-// #include <vector>
-
-/* mraa headers */
-#include "mraa/common.hpp"
-#include "mraa/i2c.hpp"
-
-#define MAX_MOTOR 4
 
 class i2c_device{
 public:
-    i2c_device(int num = MAX_MOTOR, uint8_t *i2c_addr_t = NULL, int i2c_bus=0);
+    i2c_device(int num = MAX_MOTOR, uint8_t *i2c_addr_t = NULL);
     bool detect();
     void i2c_write(int* vel_pack);
-    int i2c_read();
 
 private:
     int device_num = 0;
     uint8_t i2c_addr[MAX_MOTOR] = {0x28,0x29,0x30,0x31};
-
-    mraa::I2c device = mraa::I2c(0);
-    std::vector<mraa::I2c> devices;
-
+    int device[MAX_MOTOR];
     int Rx_buf[MAX_MOTOR];
 };
 

@@ -1,57 +1,50 @@
-enable_language(CXX)
+cmake_minimum_required(VERSION 3.14)
+project(test LANGUAGES CXX)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
 find_package(fmt REQUIRED)
 find_package(Threads REQUIRED)
 
-include_directories(${PROJECT_SOURCE_DIR}/api)
-include_directories(${PROJECT_SOURCE_DIR}/api/mraa)
-
 include_directories(
     ${fmt_INCLUDE_DIRS}
-    ${PROJECT_SOURCE_DIR}/sntestCM4/share/zos/project/include
-    ${PROJECT_SOURCE_DIR}/sntestCM4/share
-    ${PROJECT_SOURCE_DIR}/sntestCM4/share/utils
-    /home/sn/aarch64-toolchains/include
-    /home/sn/aarch64-toolchains/fmt/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/share/zos/project/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/share
+    ${CMAKE_CURRENT_SOURCE_DIR}/share/utils
 )
 
 set(LIBS
     ${LIBS}
     Threads::Threads
     fmt::fmt
-    mraa
-)
-
-file(GLOB SHARED_SOURCE_FILES
-    ${PROJECT_SOURCE_DIR}/sntestCM4/share/udp/*.cpp
+    wiringPi
 )
 
 file(GLOB TEST_FILES
-    ${PROJECT_SOURCE_DIR}/sntestCM4/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+)
+file(GLOB SHARED_SOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/share/udp/*.cpp
 )
 
-# add_executable (aio_cpp aio.cpp)
-# add_executable (gpio_advanced_cpp gpio_advanced.cpp)
-# add_executable (gpio_cpp gpio.cpp)
-# add_executable (pwm_cpp pwm.cpp)
-add_executable (sntestCM4 ${TEST_FILES})
-# add_executable (spi_cpp spi.cpp)
-# add_executable (uart_cpp uart.cpp)
-# add_executable (iio_cpp iio.cpp)
-# add_executable (led_cpp led.cpp)
+# foreach(test_file ${TEST_FILES})
+#     file(RELATIVE_PATH test_file_name ${CMAKE_CURRENT_SOURCE_DIR} ${test_file})
+#     string(REPLACE ".cpp" "" test_name ${test_file_name})
+#     # string(REPLACE "test/" "" test_name ${test_name})
+#     message("test file: " ${test_file} " -- " ${test_name})
 
+#     add_executable(${test_name}
+#         ${test_file_name}
+#         ${SHARED_SOURCE_FILES}
+#     )
+#     target_link_libraries(${test_name} ${LIBS})
+# endforeach()
 
-# target_link_libraries (aio_cpp mraa stdc++)
-# target_link_libraries (gpio_advanced_cpp mraa stdc++)
-# target_link_libraries (gpio_cpp mraa stdc++)
-# target_link_libraries (pwm_cpp mraa stdc++)
-target_link_libraries (sntestCM4 ${LIBS})
-# target_link_libraries (spi_cpp mraa stdc++)
-# target_link_libraries (uart_cpp mraa stdc++)
-# target_link_libraries (iio_cpp mraa stdc++)
-# target_link_libraries (led_cpp mraa stdc++)
-
-# if (ONEWIRE)
-#   add_executable (uart_ow_cpp uart_ow.cpp)
-#   target_link_libraries (uart_ow_cpp mraa stdc++)
-# endif ()
+add_executable(main ${TEST_FILES})
+target_link_libraries(main ${LIBS})
