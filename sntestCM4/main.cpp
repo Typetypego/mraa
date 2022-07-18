@@ -46,6 +46,8 @@ int main() {
 
         // TODO
         // Infrare
+        // zjunlict.infrare();
+        std::cout << "infrare status: " << zjunlict.infrare() << std::endl;
         // Dribble
 
         // Detect receive pack

@@ -4,6 +4,9 @@
 #include "main.h"
 #include "i2c_sntestCM4.h"
 
+#define GPIO_INFRARE_IN     4
+#define GPIO_INFRARE_OUT    5
+
 class robotz {
 public:
     robotz(int motor_num=4);
@@ -82,6 +85,8 @@ public:
 
     void regular(int* vel_pack);
     void stand(int* vel_pack);
+
+    int infrare();
 };
 
 #endif

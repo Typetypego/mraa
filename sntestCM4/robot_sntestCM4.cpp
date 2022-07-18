@@ -7,6 +7,8 @@ robotz::robotz(int motor_num) : motor(motor_num){
     if ( !motor.detect() ) {
         std::cout << "NO device detected" << std::endl;
     }
+
+    pinMode(GPIO_INFRARE_OUT, INPUT);
 }
 
 //解包，到每个轮子的速度
@@ -218,4 +220,8 @@ void robotz::pack(uint8_t *TX_Packet){
     TX_Packet[11] = (temp3 & 0xFF);
     TX_Packet[12] = (temp4 & 0xFF00)>>8;
     TX_Packet[13] = (temp4 & 0xFF);
+}
+
+int robotz::infrare() {
+    return digitalRead(GPIO_INFRARE_OUT);
 }
