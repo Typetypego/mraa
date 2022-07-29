@@ -17,7 +17,7 @@ void udp_init()
 void udp_receiver()
 {
     int port = 30001;
-    asio::ip::udp::endpoint listen_ep(asio::ip::address::from_string("0.0.0.0"),30001);
+    asio::ip::udp::endpoint listen_ep(asio::ip::address::from_string("0.0.0.0"), port);
     zos::udp::socket socket(listen_ep,_cb);
     zos::__io::GetInstance().run();
 }

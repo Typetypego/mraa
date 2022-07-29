@@ -39,6 +39,7 @@ int main() {
 
     // int count_test = 0;
 
+    int infr_count = 0;
     while (1)
     {   
         // Motor control
@@ -46,8 +47,10 @@ int main() {
 
         // TODO
         // Infrare
-        // zjunlict.infrare();
-        std::cout << "infrare status: " << zjunlict.infrare() << std::endl;
+        zjunlict.infrare_detect();
+        if (!zjunlict.Robot_Is_Infrared) {
+            std::cout << "infrare triggered: " << infr_count++ << std::endl;
+        }
         // Dribble
 
         // Detect receive pack
@@ -58,6 +61,12 @@ int main() {
                 // Correct package
                 // zjunlict.motion_planner(vel_pack);   // Already set to regular()
                 zjunlict.regular(vel_pack);
+                // Output vel
+                // std::string str_temp;
+                // for(int i=0; i<4; i++) {
+                //     str_temp += fmt::format("wheel{0}: {1}    ", i, vel_pack[i]);
+                // }
+                // std::cout << str_temp << std::endl;
 
                 Received_packet++;
                 Total_Missed_Package_Num = 0;
@@ -109,15 +118,17 @@ int main() {
         // }else {
         //     count_test++;
         // }
-        // motor.i2c_read(vel_encoder);
+        zjunlict.motor.detect();
 
         // Encoder read
-        std::string str_t;
-        for(int i=0; i<zjunlict.test_motor_num; i++) {
-            str_t += fmt::format("Motor {}  Vel {}    ", i, vel_encoder[i]);
-        }
-        std::cout << str_t << std::endl;
+        // std::string str_t;
+        // for(int i=0; i<zjunlict.test_motor_num; i++) {
+        //     str_t += fmt::format("Motor {}  Vel {}    ", i, vel_encoder[i]);
+        // }
+        // std::cout << str_t << std::endl;
         // Send back
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+        // zjunlict.infrare_toggin();
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }

@@ -13,6 +13,7 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
+#include <thread>
 #include "wifi_sntestCM4.h"
 #include "i2c_sntestCM4.h"
 

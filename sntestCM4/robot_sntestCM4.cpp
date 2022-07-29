@@ -7,8 +7,14 @@ robotz::robotz(int motor_num) : motor(motor_num){
     if ( !motor.detect() ) {
         std::cout << "NO device detected" << std::endl;
     }
+    else {
+        std::cout << "!!!" << std::endl;
+    }
 
     pinMode(GPIO_INFRARE_OUT, INPUT);
+    pinMode(GPIO_INFRARE_IN, OUTPUT);
+    std::thread infrare_pwm(&robotz::infrare_toggin, this);
+    infrare_pwm.detach();
 }
 
 //解包，到每个轮子的速度
@@ -222,6 +228,22 @@ void robotz::pack(uint8_t *TX_Packet){
     TX_Packet[13] = (temp4 & 0xFF);
 }
 
-int robotz::infrare() {
-    return digitalRead(GPIO_INFRARE_OUT);
+int robotz::infrare_detect() {
+    // digitalWrite(GPIO_INFRARE_IN, LOW);
+
+    Robot_Is_Infrared = digitalRead(GPIO_INFRARE_OUT);
+    // digitalWrite(GPIO_INFRARE_IN, HIGH);
+
+    return Robot_Is_Infrared;
+}
+
+void robotz::infrare_toggin() {
+    while(true) {
+        // std::scoped_lock lock(_mutex);
+        digitalWrite(GPIO_INFRARE_IN, HIGH);
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        digitalWrite(GPIO_INFRARE_IN, LOW);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        // std::cout << "is toggin" << std::endl;
+    }
 }

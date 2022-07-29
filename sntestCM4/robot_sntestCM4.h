@@ -40,7 +40,7 @@ public:
     uint8_t DEC_FRAME = 0;
     uint8_t use_dir = 0;
 
-    const double Vel_k2 = 0.520573;
+    const double Vel_k2 = 0.520573; // TODO: change to 1
 
     double sin_angle[4] = {0.7071067811865476, -0.7071067811865476,
                         -0.7071067811865476,
@@ -86,7 +86,11 @@ public:
     void regular(int* vel_pack);
     void stand(int* vel_pack);
 
-    int infrare();
+    int infrare_detect();
+    void infrare_toggin();
+
+private:
+    std::mutex _mutex;
 };
 
 #endif

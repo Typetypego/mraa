@@ -15,14 +15,14 @@ i2c_device::i2c_device(int num, uint8_t *i2c_addr_t) {
 bool i2c_device::detect() {
     bool flag = false;
     for (int i=0; i<device_num; i++) {
-        Rx_buf[i] = wiringPiI2CRead(device[i]);
+        Rx_buf[i] = wiringPiI2CRead(device[i]); // TODO: read specific bits
         if (Rx_buf[i] != -1)    flag = true;
     }
     if (flag) {
         // Output
-        // std::cout << "huibao: ";
-        // for (int i=0; i<device_num; i++)    std::cout<< Rx_buf[i] << " ";
-        // std::cout << std::endl;
+        std::cout << "huibao: ";
+        for (int i=0; i<device_num; i++)    std::cout<< Rx_buf[i] << " ";
+        std::cout << std::endl;
     }
     return flag;
 }
@@ -33,7 +33,7 @@ void i2c_device::i2c_write(int* vel_pack) {
         delay(5);
     }
     // Output
-    // std::cout << "motor speed: ";
-    // for (int i=0; i<device_num; i++)    std::cout<< vel_pack[i] << " ";
-    // std::cout << std::endl;
+    std::cout << "motor speed: ";
+    for (int i=0; i<device_num; i++)    std::cout<< vel_pack[i] << " ";
+    std::cout << std::endl;
 }
