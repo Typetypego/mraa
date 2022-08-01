@@ -1,8 +1,8 @@
 #include "robot_sntest.h"
 
-robotz::robotz(int motor_num) {
+robotz::robotz(int motor_num) : motor(motor_num) {
     // Motor Init
-    motor = new i2c_device(test_motor_num, motor_addr);
+    // motor = new i2c_device(test_motor_num, motor_addr);
     // TODO: change to while
     if ( !motor.detect() ) {
         std::cout << "NO device detected" << std::endl;

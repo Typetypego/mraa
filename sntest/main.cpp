@@ -1,4 +1,5 @@
 #include "main.h"
+#include "robot_sntest.h"
 
 uint8_t tx_freq, tx_mode, rx_freq, rx_mode;  //频点
 

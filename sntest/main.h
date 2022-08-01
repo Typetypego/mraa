@@ -16,6 +16,6 @@
 #include <thread>
 
 #include "wifi_sntest.h"
-#include "robot_sntest.h"
+// #include "robot_sntest.h"
 
 #endif
